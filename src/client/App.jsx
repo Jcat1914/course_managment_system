@@ -1,21 +1,19 @@
+import React from "react";
 import "./App.css";
-import RoutesWithNotFound from "./helpers/RoutesWithNotFound";
-import { Login } from "./pages";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-  return (
-    <>
-      <BrowserRouter>
-        <RoutesWithNotFound>
-          <Route path="/" element={<Login />} />jj
-
-
-
-        </RoutesWithNotFound >
-      </BrowserRouter>
-    </>
-  );
+	return (
+		<>
+			/*
+			<BrowserRouter>
+				<RoutesWithNotFound>
+					<Route path="/" element={<Login />} />
+				</RoutesWithNotFound>
+			</BrowserRouter>
+			*/
+			<h1>Hello World</h1>
+		</>
+	);
 }
 
 export default App;

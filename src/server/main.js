@@ -1,12 +1,13 @@
-import express from "express";
-import ViteExpress from "vite-express";
+import { sequelize } from './database/conexion.js';
+import { createApp } from './app.js'
+import * as models from './models/index.js'
+async function main() {
+  try {
+    await sequelize.sync({ force: false })
+    createApp({ models });
 
-const app = express();
-
-app.get("/hello", (req, res) => {
-  res.send("Hello Vite + React!");
-});
-
-ViteExpress.listen(app, 3000, () =>
-  console.log("Server is listening on port 3000..."),
-);
+  } catch (error) {
+    console.error('Unable to start the application: ', error);
+  }
+}
+main()
