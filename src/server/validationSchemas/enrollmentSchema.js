@@ -1,5 +1,4 @@
 import Joi from 'joi';
-
 export const enrollmentSchema = Joi.object({
   id: Joi.number().integer().min(1).optional(),
   studentId: Joi.number().integer().min(1).required(),

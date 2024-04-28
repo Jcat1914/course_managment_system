@@ -22,6 +22,7 @@ export const createApp = ({ models }) => {
     }),
   );
   app.use("/api/v1/auth", createAuthRouter({ User: models.User }));
+  app.use("/api/v1/admin", createAdminRouter({ User: models.User }));
 
   app.use("/api/v1/city", createCityRouter({ City: models.City, Country: models.Country }));
 
