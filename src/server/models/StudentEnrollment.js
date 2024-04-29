@@ -34,3 +34,5 @@ export const StudentEnrollment = sequelize.define("StudentEnrollment", {
 
 StudentEnrollment.belongsTo(Student)
 StudentEnrollment.belongsTo(Program);
+Program.hasMany(StudentEnrollment);
+Student.hasMany(StudentEnrollment);

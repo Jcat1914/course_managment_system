@@ -22,6 +22,4 @@ export const FacultyCredentials = sequelize.define(
   }
 
 )
-FacultyCredentials.belongsTo(Faculty)
-Faculty.hasMany(FacultyCredentials)
 

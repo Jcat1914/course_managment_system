@@ -4,9 +4,10 @@ import session from "express-session";
 import { createCityRouter } from "./routers/cityRouter.js";
 import { createCourseRouter } from "./routers/courseRouter.js";
 import { createAuthRouter } from "./routers/authRouter.js";
+import { createFacultyRouter } from "./routers/facultyRouter.js";
 import ViteExpress from "vite-express";
 
-export const createApp = ({ models }) => {
+export const createApp = ({ models, services }) => {
   const app = express();
 
   app.use(express.json());
@@ -21,13 +22,10 @@ export const createApp = ({ models }) => {
       },
     }),
   );
-  app.use("/api/v1/auth", createAuthRouter({ User: models.User }));
   //app.use("/api/v1/admin", createAdminRouter({ User: models.User }));
-
   app.use("/api/v1/city", createCityRouter({ City: models.City, Country: models.Country }));
-
   app.use("/api/v1/student", createStudentRouter({ Student: models.Student, StudentEnrollment: models.StudentEnrollment, City: models.City, Program: models.Program }))
-
+  app.use("/api/v1/faculty", createFacultyRouter(services.facultyService))
   app.use('/api/v1/courses', createCourseRouter({ Course: models.Course }));
 
 

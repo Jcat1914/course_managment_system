@@ -1,5 +1,7 @@
 import { sequelize } from '../database/conexion.js'
 import { DataTypes } from 'sequelize'
+import { Course } from './Course.js'
+import { FacultyCredentials } from './FacultyCredentials.js'
 
 export const Faculty = sequelize.define(
   'faculty',
@@ -9,7 +11,7 @@ export const Faculty = sequelize.define(
       primaryKey: true,
       autoIncrement: true
     },
-    firtName: {
+    firstName: {
       type: DataTypes.STRING(32),
       allowNull: false
     },
@@ -22,11 +24,11 @@ export const Faculty = sequelize.define(
       allowNull: false
     },
     institutionalEmail: {
-      type: DataTypes.STRING(24),
+      type: DataTypes.STRING(64),
       allowNull: false
     },
     personalEmail: {
-      type: DataTypes.STRING(24),
+      type: DataTypes.STRING(64),
       allowNull: false
     },
     DOB: {
@@ -34,5 +36,8 @@ export const Faculty = sequelize.define(
       allowNull: false
     },
   }
-
 )
+Faculty.belongsToMany(Course, { through: 'facultyCourses' })
+Course.belongsToMany(Faculty, { through: 'facultyCourses' })
+FacultyCredentials.belongsTo(Faculty)
+Faculty.hasMany(FacultyCredentials)
