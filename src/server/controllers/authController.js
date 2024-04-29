@@ -1,4 +1,6 @@
-import bycrypt from "bcryptjs";
+import { authService } from "../services/index.js";
+import { userSchema } from "../validationSchemas/index.js";
+import { validationService } from "../services/index.js";
 export class AuthController {
   constructor({ User }) {
     this.userModel = User;
@@ -7,43 +9,30 @@ export class AuthController {
   login = async (req, res) => {
     const { email, password } = req.body;
     try {
-      const user = await this.userModel.findOne({ email });
-      console.log(user);
-      if (!user) res.status(400).json({ msg: "Invalid Credential" });
-      const validPassword = bycrypt.compare(password, user.password);
-      if (validPassword) {
-        req.session.user = user;
-        res.status(200).json({
-          msg: "Login Succesfully",
-          user: {
-            firstName: user.first_name,
-            lastName: user.last_name,
-          },
-        });
-      }
+      const authUser = await authService.login(this.userModel, email, password)
+      req.session.user = authUser;
+      res.status(200).json({
+        msg: "Login Succesfully",
+        user: {
+          firstName: authUser.firstName,
+          lastName: authUser.lastName,
+        }
+      })
     } catch (error) {
-      console.log(error);
+      res.status(401).json({ error: error })
     }
   };
 
   register = async (req, res) => {
-    console.log(req.body);
-    const { first_name, last_name, email, password, phone_number, role } = req.body;
     try {
-      const hashPassword = await bycrypt.hash(password, 10);
-
-      const newUser = await this.userModel.create({
-        first_name: first_name,
-        last_name: last_name,
-        email: email,
-        password: hashPassword,
-        phone_number: phone_number,
-        role: role,
-      });
-
+      const validatedUser = await validationService.validateData(req.body, userSchema);
+      const newUser = await authService.register(this.userModel, validatedUser)
+      req.session.user = newUser;
       res.status(201).json({ msg: "User Created", user: newUser })
     } catch (error) {
-      console.log(error);
+      if (error.name === "ValidationError") {
+        res.status(403).json({ msg: "Invalid Data", error: error.message });
+      }
       res.status(500).json({ msg: "Internal Server Error" });
     }
   };

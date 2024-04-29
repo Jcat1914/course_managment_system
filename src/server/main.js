@@ -1,9 +1,8 @@
-import { sequelize } from './database/conexion.js';
 import { createApp } from './app.js'
 import * as models from './models/index.js'
 async function main() {
   try {
-    await sequelize.sync({ force: false })
+    //await sequelize.sync({ force: false })
     createApp({ models });
 
   } catch (error) {
