@@ -5,6 +5,7 @@ export const createAuthRouter = (AuthService) => {
   const authController = new AuthController(AuthService);
   authRouter.post("/login", authController.login);
   authRouter.post("/register", authController.register);
+  authRouter.get("/logout", authController.logout);
 
   return authRouter;
 };

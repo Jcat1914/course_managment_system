@@ -42,4 +42,13 @@ export class AuthController {
       }
     }
   }
+
+  logout = async (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(500).json({ err: "Internal Server Error" });
+      }
+      res.status(200).json({ msg: "Logout Successfully" });
+    });
+  }
 };

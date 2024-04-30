@@ -1,5 +1,5 @@
 import { baseUrl } from '../config/api.js';
-import { persistLocalStorage } from '../helpers/localStorage.js'
+import { persistLocalStorage, clearLocalStorage } from '../helpers/localStorage.js'
 export const login = async (username, password) => {
   try {
     const response = await fetch(`${baseUrl}/auth/login`, {
@@ -14,6 +14,20 @@ export const login = async (username, password) => {
       throw new Error(data.error)
     }
     persistLocalStorage('user', data.user)
+    return data
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+export const logout = async () => {
+  try {
+    clearLocalStorage('user')
+    const response = await fetch(`${baseUrl}/auth/logout`);
+    const data = await response.json();
+    if (data.err) {
+      throw new Error(data.err)
+    }
     return data
   } catch (error) {
     throw new Error(error.message);

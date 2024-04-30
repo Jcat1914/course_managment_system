@@ -4,5 +4,11 @@ export const PublicRoutes = {
 
 export const PrivateRoutes = {
   PRIVATE: 'private',
-  DASHBOARD: 'Dashboard'
+  DASHBOARD: 'Dashboard',
+  STUDENT: 'Student',
+  FACULTY: 'Faculty',
+  PROGRAM: 'Program',
+  COURSE: 'Course',
+  ROOM: 'Room',
+  TERM: 'Term',
 }
