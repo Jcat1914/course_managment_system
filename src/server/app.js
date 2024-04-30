@@ -23,6 +23,7 @@ export const createApp = ({ models, services }) => {
     }),
   );
   //app.use("/api/v1/admin", createAdminRouter({ User: models.User }));
+  app.use("/api/v1/auth", createAuthRouter(services.authService));
   app.use("/api/v1/city", createCityRouter({ City: models.City, Country: models.Country }));
   app.use("/api/v1/student", createStudentRouter({ Student: models.Student, StudentEnrollment: models.StudentEnrollment, City: models.City, Program: models.Program }))
   app.use("/api/v1/faculty", createFacultyRouter(services.facultyService))

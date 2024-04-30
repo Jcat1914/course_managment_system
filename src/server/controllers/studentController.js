@@ -1,6 +1,6 @@
 import { studentSchema } from '../validationSchemas/index.js'
 import { enrollmentSchema } from '../validationSchemas/index.js'
-import { validationService  } from '../services/index.js'
+import { validationService } from '../services/index.js'
 import { ValidationError } from '../helpers/errors.js'
 export class StudentController {
   constructor({ Student, StudentEnrollment, City, Program }) {
@@ -34,9 +34,9 @@ export class StudentController {
       res.status(500).json({ msg: 'Internal Server Error' });
     }
   }
-  
+
   createStudent = async (req, res) => {
-    const {student,enrollment} = req.body;
+    const { student, enrollment } = req.body;
     try {
       const validatedUser = validationService.validateData(req.body.student, studentSchema);
       const newStudent = await this.studentModel.create(validatedUser)
@@ -46,10 +46,10 @@ export class StudentController {
       const studentEnrollment = await this.studentEnrollmentModel.create(validEnrollment);
       res.status(201).json(student);
     } catch (e) {
-      if(e instanceof ValidationError){
+      if (e instanceof ValidationError) {
         res.status(403).json({ msg: "Invalid data", error: e });
-      }else{
-        res.status(500).json({ msg: "Could not create student"});
+      } else {
+        res.status(500).json({ msg: "Could not create student" });
         console.log(e)
       }
     }

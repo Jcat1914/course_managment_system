@@ -1,10 +1,10 @@
 import { Route } from "react-router-dom";
-import RoutesWithNotFound from "../../helpers/RoutesWithNotFound";
+import { RoutesWithNotFound } from "../../helpers/RoutesWithNotFound.jsx";
 import { Navigate } from "react-router-dom";
-import { PrivateRoutes } from "../../config/routes";
-import { Dashboard } from "..";
+import { PrivateRoutes } from "../../models/routes.js"
+import { Dashboard } from "../../pages/private/Dashboard/Dashboard.jsx";
 
-function Private() {
+export function Private() {
   return (
     <RoutesWithNotFound>
       <Route path="/" element={<Navigate to={PrivateRoutes.DASHBOARD} />} />
@@ -12,4 +12,3 @@ function Private() {
     </RoutesWithNotFound>
   )
 }
-export default Private

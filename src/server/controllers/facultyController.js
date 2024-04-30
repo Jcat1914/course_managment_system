@@ -58,6 +58,35 @@ export class FacultyController {
     }
   }
 
+  updateFaculty = async (req, res) => {
+    const { id } = req.params;
+    const { faculty } = req.body;
+    try {
+      const updatedFaculty = await this.facultyService.updateFaculty(id, faculty);
+      res.status(200).json(updatedFaculty);
+    } catch (error) {
+      res.status(500).json({ err: error.message });
+    }
+  }
 
+  updateFacultyCredentials = async (req, res) => {
+    const { id } = req.params;
+    const { credentials } = req.body;
+    try {
+      const updatedCredentials = await this.facultyService.updateFacultyCredentials(id, credentials);
+      res.status(200).json(updatedCredentials);
+    } catch (error) {
+      res.status(500).json({ err: error.message });
+    }
+  }
+
+  deleteFacultyCourse = async (req, res) => {
+    const { id, courseId } = req.params;
+    try {
+      const faculty = await this.facultyService.deleteFacultyCourse(id, courseId);
+      res.status(200).json(faculty);
+    } catch (error) {
+      res.status(500).json({ err: error.message });
+    }
+  }
 }
-

@@ -1,5 +1,5 @@
-const programController = ({programModel}) => {
-const Program = programModel;
+const programController = ({ programModel }) => {
+  const Program = programModel;
   const getPrograms = async (req, res) => {
     try {
       const programs = await Program.find();

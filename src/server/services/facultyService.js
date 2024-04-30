@@ -67,7 +67,7 @@ export class FacultyService {
       if (!faculty) {
         throw new Error('Faculty not found');
       }
-      await faculty.setCredentials(credentials)
+      await faculty.addCredentials(credentials)
     } catch (error) {
       throw new Error(error.message);
     }
@@ -84,8 +84,52 @@ export class FacultyService {
           id: courseIds
         }
       });
+      const newFaculty = await faculty.addCourses(courses);
+      return newFaculty
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+  updateFaculty = async () => {
 
-      await faculty.addCourses(courses);
+  }
+
+  updateFacultyCredentials = async (facultyId, credentials) => {
+    try {
+      const faculty = await this.Faculty.findByPk(facultyId);
+
+      if (!faculty) {
+        throw new Error('Faculty not found');
+      }
+      // Set the new credentials for the faculty
+      console.log(credentials)
+      await faculty.addFacultyCredentials(credentials);
+      return true; // Indicate successful update
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  deleteFaculty = async (id) => {
+    try {
+      const faculty = await this.Faculty.findByPk(id);
+      if (!faculty) {
+        throw new Error('Faculty not found');
+      }
+      return await faculty.destroy();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  deleteFacultyCourse = async (facultyId, courseId) => {
+    try {
+      const faculty = await this.Faculty.findByPk(facultyId);
+      if (!faculty) {
+        throw new Error('Faculty not found');
+      }
+      return await faculty.removeCourses(courseId);
+
     } catch (error) {
       throw new Error(error.message);
     }

@@ -9,11 +9,11 @@ export const User = sequelize.define(
       primaryKey: true,
       allowNull: false,
     },
-    first_name: {
+    firstName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    last_name: {
+    lastName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -29,7 +29,7 @@ export const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    phone_number: {
+    phoneNumber: {
       type: DataTypes.STRING,
     },
     role: {

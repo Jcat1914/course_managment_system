@@ -1,12 +1,11 @@
 import React from "react";
 import Header from "../../../component/Header/Header";
 
-const Dashboard = () => {
-	return (
-		<main>
-			<Header />
-		</main>
-	);
+export const Dashboard = () => {
+  return (
+    <main>
+      <Header />
+    </main>
+  );
 };
 
-export default Dashboard;
