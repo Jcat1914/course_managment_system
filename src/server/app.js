@@ -1,11 +1,12 @@
 import { createStudentRouter } from "./routers/studentRouter.js"
 import express from "express";
 import session from "express-session";
-import { createCityRouter } from "./routers/cityRouter.js";
 import { createCourseRouter } from "./routers/courseRouter.js";
 import { createAuthRouter } from "./routers/authRouter.js";
 import { createFacultyRouter } from "./routers/facultyRouter.js";
+import { createUserRouter } from "./routers/userRouter.js";
 import ViteExpress from "vite-express";
+import { createProgramRouter } from "./routers/programRouter.js";
 
 export const createApp = ({ models, services }) => {
   const app = express();
@@ -24,10 +25,11 @@ export const createApp = ({ models, services }) => {
   );
   //app.use("/api/v1/admin", createAdminRouter({ User: models.User }));
   app.use("/api/v1/auth", createAuthRouter(services.authService));
-  app.use("/api/v1/city", createCityRouter({ City: models.City, Country: models.Country }));
-  app.use("/api/v1/student", createStudentRouter({ Student: models.Student, StudentEnrollment: models.StudentEnrollment, City: models.City, Program: models.Program }))
+  app.use("/api/v1/users", createUserRouter(services.userService))
+  app.use("/api/v1/student", createStudentRouter({ Student: models.Student, StudentEnrollment: models.StudentEnrollment, Country: models.Country, Program: models.Program }))
   app.use("/api/v1/faculty", createFacultyRouter(services.facultyService))
-  app.use('/api/v1/courses', createCourseRouter({ Course: models.Course }));
+  app.use('/api/v1/course', createCourseRouter({ Course: models.Course }));
+  app.use('/api/v1/program', createProgramRouter(services.programService))
 
 
   ViteExpress.listen(app, 3000, () =>

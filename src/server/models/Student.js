@@ -1,5 +1,5 @@
 import { sequelize } from '../database//conexion.js';
-import { City } from './City.js';
+import { Country } from './Country.js';
 import { DataTypes } from 'sequelize';
 
 export const Student = sequelize.define('students', {
@@ -39,6 +39,5 @@ export const Student = sequelize.define('students', {
   { timestamps: true },
 );
 
-Student.belongsTo(City)
-City.hasMany(Student);
-
+Student.belongsTo(Country)
+Country.hasMany(Student)

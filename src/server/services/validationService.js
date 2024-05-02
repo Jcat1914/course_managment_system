@@ -5,6 +5,7 @@ export const validationService = {
     if (error) {
       throw new ValidationError(error.details[0].message)
     }
+    console.log(value)
     return value;
   }
 };

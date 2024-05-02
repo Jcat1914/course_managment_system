@@ -2,7 +2,6 @@ export { User } from './User.js';
 export { Term } from './Term.js';
 export { Room } from './Room.js';
 export { Buildings } from './Building.js';
-export { City } from './City.js'
 export { Country } from './Country.js'
 export { Student } from './Student.js'
 export { Faculty } from './Faculty.js'

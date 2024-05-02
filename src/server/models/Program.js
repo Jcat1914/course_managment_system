@@ -24,7 +24,12 @@ export const Program = sequelize.define("Program", {
   degreeLevel: {
     type: DataTypes.ENUM('Associate', 'Bachelor', 'Master', 'Doctorate'),
     allowNull: false
+  },
+  status: {
+    type: DataTypes.ENUM('active', 'inactive'),
+    defaultValue: 'active'
   }
+
 });
 
 

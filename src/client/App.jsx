@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import { BrowserRouter, Route, Navigate } from "react-router-dom";
 import { RoutesWithNotFound } from "./helpers/RoutesWithNotFound.jsx";
 import { PublicRoutes } from "./models/routes";

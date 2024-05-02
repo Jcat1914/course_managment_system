@@ -1,10 +1,13 @@
-import React from 'react';
-import { useStudents } from '../../../customHooks/useStudents';
+import React from "react";
+import { DashboardContent } from "../../../component/DashboardContent/DashboardContent";
+import { Table } from "../../../component/Table/Table";
+import { useUsers } from "../../../customHooks/useUsers";
+import { useUserStore } from "../../../stores/userStore";
+import { AddButton } from "./components/AddButton";
 import { useNavigate } from 'react-router-dom';
-
-export const StudentDashboard = () => {
-  const { loading } = useStudents();
-  const { students } = useUserStore()
+export const UserDashboard = () => {
+  const { loading } = useUsers();
+  const { users } = useUserStore()
   const navigate = useNavigate();
 
   const openAddPage = (e) => {
@@ -26,11 +29,11 @@ export const StudentDashboard = () => {
               { key: 'id', label: 'ID' },
               { key: 'firstName', label: 'First Name' },
               { key: 'lastName', label: 'Last Name' },
-              { key: 'institutionalEmail', label: 'Institutional Email' },
+              { key: 'email', label: 'Email' },
               { key: 'phoneNumber', label: 'Phone Number' },
               { key: 'role', label: 'Role' },
             ]}
-              data={students.students}
+              data={users.users}
               title={'Users'}
               onRowClick={openEditPage} />
 

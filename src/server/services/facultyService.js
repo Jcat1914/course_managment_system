@@ -79,12 +79,7 @@ export class FacultyService {
       if (!faculty) {
         throw new Error('Faculty not found');
       }
-      const courses = await this.Courses.findAll({
-        where: {
-          id: courseIds
-        }
-      });
-      const newFaculty = await faculty.addCourses(courses);
+      const newFaculty = await faculty.addCourses(courseIds);
       return newFaculty
     } catch (error) {
       throw new Error(error.message);

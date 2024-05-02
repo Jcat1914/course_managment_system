@@ -17,9 +17,11 @@
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-hook-form": "^7.51.3",
+		"react-modal": "^3.16.1",
 		"react-router-dom": "^6.22.3",
 		"sequelize": "^6.37.2",
-		"vite-express": "*"
+		"vite-express": "*",
+		"zustand": "^4.5.2"
 	},
 	"devDependencies": {
 		"@types/react": "^18.0.26",

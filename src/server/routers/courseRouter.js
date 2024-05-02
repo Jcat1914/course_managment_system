@@ -6,7 +6,7 @@ export const createCourseRouter = ({ Course }) => {
   router.get('/', courseController.getCourses);
   router.get('/:id', courseController.getCourseById);
   router.post('/add', courseController.addCourse);
-  router.put('/update', courseController.updateCourse);
+  router.put('/:id/update', courseController.updateCourse);
   router.delete('/:id', courseController.deleteCourse);
   return router;
 };

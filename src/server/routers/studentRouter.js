@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { StudentController } from '../controllers/studentController.js';
 
-export function createStudentRouter({ Student, StudentEnrollment, City, Program }) {
+export function createStudentRouter({ Student, StudentEnrollment, Country, Program }) {
   const studentRouter = Router();
-  const studentController = new StudentController({ Student, StudentEnrollment, City, Program })
+  const studentController = new StudentController({ Student, StudentEnrollment, Country, Program })
   studentRouter.get('/', studentController.getStudents);
   // studentRouter.get('/:id', studentController.getStudentById);
   studentRouter.post('/add', studentController.createStudent);

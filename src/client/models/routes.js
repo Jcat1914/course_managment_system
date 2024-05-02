@@ -11,4 +11,5 @@ export const PrivateRoutes = {
   COURSE: 'Course',
   ROOM: 'Room',
   TERM: 'Term',
+  USER: 'User'
 }
