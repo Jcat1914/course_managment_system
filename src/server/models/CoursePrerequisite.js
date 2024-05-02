@@ -2,7 +2,7 @@ import { sequelize } from "../database/conexion.js";
 import { DataTypes } from "sequelize";
 import { Course } from "./Course.js";
 
-export const CoursePrerequisite = sequelize.define("CoursePrerequisite", {
+export const CoursePrerequisite = sequelize.define("coursePrerequisite", {
   courseId: {
     type: DataTypes.INTEGER,
     allowNull: false,

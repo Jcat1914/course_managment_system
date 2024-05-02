@@ -10,10 +10,10 @@ export const Country = sequelize.define(
       autoIncrement: true
     },
     name: {
-      type: DataTypes.STRING(32),
+      type: DataTypes.STRING(64),
       allowNull: false
     },
   },
-  { timestamps: true }
+  { timestamps: false }
 );
 

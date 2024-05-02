@@ -2,7 +2,7 @@ import { sequelize } from "../database/conexion.js";
 import { DataTypes } from "sequelize";
 import { TermSchedule } from "./TermSchedule.js";
 
-export const TimeSlot = sequelize.define("TimeSlot", {
+export const TimeSlot = sequelize.define("timeSlot", {
   termScheduleId: {
     type: DataTypes.INTEGER,
     allowNull: false,

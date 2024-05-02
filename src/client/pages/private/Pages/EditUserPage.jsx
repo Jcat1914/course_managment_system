@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { Form } from './components/Form';
+import { Form } from './components/Form.jsx'
 import { useForm } from 'react-hook-form';
-import { BackButton } from './components/BackButton';
+import { BackButton } from './components/BackButton.jsx'
 import { modifyUser } from '../../../services/userService.js'
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../../stores/userStore.js';

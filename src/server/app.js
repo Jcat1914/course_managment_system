@@ -30,6 +30,16 @@ export const createApp = ({ models, services }) => {
   app.use("/api/v1/faculty", createFacultyRouter(services.facultyService))
   app.use('/api/v1/course', createCourseRouter({ Course: models.Course }));
   app.use('/api/v1/program', createProgramRouter(services.programService))
+  app.get('/api/v1/country', async (req, res) => {
+    try {
+
+      const countries = await models.Country.findAll();
+      const data = countries.map(country => country.name)
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  })
 
 
   ViteExpress.listen(app, 3000, () =>

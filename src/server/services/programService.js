@@ -44,10 +44,12 @@ export class ProgramService {
   addProgramCourses = async (id, courseIds) => {
     try {
       const program = await this.Program.findByPk(id);
+      console.log(courseIds)
       if (!program) {
         throw new Error('Program not found');
       }
       await program.addCourses(courseIds);
+      await program.reload({ include: 'courses' });
       return program;
     } catch (error) {
       throw new Error("Could not add course to program")

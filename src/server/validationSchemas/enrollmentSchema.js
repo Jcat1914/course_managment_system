@@ -7,7 +7,7 @@ export const enrollmentSchema = Joi.object({
   startDate: Joi.date().iso().required(),
   graduationDate: Joi.date().iso().required(),
   cumulativeGPA: Joi.number().min(0).max(4).required(),
-  status: Joi.string().valid('active', 'inactive').required(),
+  status: Joi.string().valid('drop', 'active', 'graduated').required(),
   createdAt: Joi.date().iso().optional(),
   updatedAt: Joi.date().iso().optional()
 });

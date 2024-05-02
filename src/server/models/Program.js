@@ -2,7 +2,7 @@
 import { sequelize } from "../database/conexion.js";
 import { DataTypes } from "sequelize";
 
-export const Program = sequelize.define("Program", {
+export const Program = sequelize.define("program", {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -29,7 +29,6 @@ export const Program = sequelize.define("Program", {
     type: DataTypes.ENUM('active', 'inactive'),
     defaultValue: 'active'
   }
-
 });
 
 

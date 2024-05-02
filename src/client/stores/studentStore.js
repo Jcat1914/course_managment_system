@@ -1,22 +1,37 @@
 import { create } from 'zustand'
 
 export const useStudentStore = create((set) => ({
-  users: [],
-  setUsers: (users) => set({ users }),
-
-  addUser: (newUser) =>
-    set((state) => ({ users: [...state.users, newUser] })),
-
-  updateUser: (updatedUser) =>
+  students: [],
+  setStudents: (students) => set({ students }),
+  addStudent: (newStudent) =>
+    set((state) => ({ students: [...state.students, newStudent] })),
+  updateStudent: (updatedStudent) =>
     set((state) => ({
-      users: state.users.map((user) =>
-        user.id === updatedUser.id ? updatedUser : user
+      students: state.students.map((student) =>
+        student.id === updatedStudent.id ? updatedStudent : student
       ),
     })),
-
-  deleteUser: (id) =>
+  deleteStudent: (id) =>
     set((state) => ({
-      users: state.users.filter((user) => user.id !== id),
+      students: state.students.filter((student) => student.id !== id),
+    })),
+
+}))
+
+export const useStudentEnrollmentStore = create((set) => ({
+  students: [],
+  setStudents: (students) => set({ students }),
+  addStudent: (newStudent) =>
+    set((state) => ({ students: [...state.students, newStudent] })),
+  updateStudent: (updatedStudent) =>
+    set((state) => ({
+      students: state.students.map((student) =>
+        student.id === updatedStudent.id ? updatedStudent : student
+      ),
+    })),
+  deleteStudent: (id) =>
+    set((state) => ({
+      students: state.students.filter((student) => student.id !== id),
     })),
 
 }))

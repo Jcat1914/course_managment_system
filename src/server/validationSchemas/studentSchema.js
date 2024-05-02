@@ -9,7 +9,7 @@ export const studentSchema = Joi.object({
   institutionalEmail: Joi.string().email().max(32), // Fixed this line
   personalEmail: Joi.string().email().max(32),
   gender: Joi.string().valid('Male', 'Female', 'Other').required(),
-  cityId: Joi.number().integer().min(1).required(),
+  countryId: Joi.number().integer().min(1).required(),
   createdAt: Joi.date().iso().optional(),
   updatedAt: Joi.date().iso().optional()
 });

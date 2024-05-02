@@ -7,8 +7,9 @@ export function createStudentRouter({ Student, StudentEnrollment, Country, Progr
   studentRouter.get('/', studentController.getStudents);
   // studentRouter.get('/:id', studentController.getStudentById);
   studentRouter.post('/add', studentController.createStudent);
+  studentRouter.get('/enrollment/:id', studentController.getStudentEnrollments);
   // studentRouter.put('/:id', studentController.updateStudent);
-  studentRouter.delete('/:id', studentController.deleteStudent);
+  studentRouter.put('/enrollment/:id', studentController.updateStudentStatus);
 
   return studentRouter;
 }

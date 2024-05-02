@@ -3,7 +3,7 @@ import { DataTypes } from "sequelize";
 import { Student } from "./Student.js";
 import { Program } from "./Program.js";
 
-export const StudentEnrollment = sequelize.define("StudentEnrollment", {
+export const StudentEnrollment = sequelize.define("studentEnrollment", {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -12,7 +12,8 @@ export const StudentEnrollment = sequelize.define("StudentEnrollment", {
   },
   credits: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
+    defaultValue: 0
   },
   startDate: {
     type: DataTypes.DATEONLY,
@@ -24,10 +25,11 @@ export const StudentEnrollment = sequelize.define("StudentEnrollment", {
   },
   cumulativeGPA: {
     type: DataTypes.FLOAT,
-    allowNull: true
+    allowNull: true,
+    delaultValue: 0
   },
   status: {
-    type: DataTypes.ENUM('active', 'inactive'),
+    type: DataTypes.ENUM('drop', 'active', 'graduated'),
     defaultValue: 'active'
   }
 });

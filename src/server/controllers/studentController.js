@@ -13,13 +13,58 @@ export class StudentController {
   getStudents = async (req, res) => {
     try {
       const students = await this.studentModel.findAll({ include: this.CountryModel })
-      res.status(200).json(students);
+      const data = students.map(student => (
+        {
+          id: student.id,
+          firstName: student.firstName,
+          lastName: student.lastName,
+          institutionalEmail: student.institutionalEmail,
+          personalEmail: student.personalEmail,
+          phoneNumber: student.phoneNumber,
+          country: student.country.name,
+          DOB: student.DOB,
+          gender: student.gender
+        }
+      ))
+
+      res.status(200).json({ students: data });
     } catch (e) {
       res.status(500).json({ msg: "Could not load students", error: e });
       console.log(e)
     }
-
   };
+
+  getStudentEnrollments = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const enrollments = await this.studentEnrollmentModel.findAll({
+        where: { studentId: id }, include: {
+          model: this.programModel,
+          attributes: ['name']
+        }
+      })
+      if (enrollments) {
+        const data = enrollments.map(enrollment => (
+          {
+            id: enrollment.id,
+            programId: enrollment.programId,
+            program: enrollment.program.name,
+            status: enrollment.status,
+            startDate: enrollment.startDate,
+            graduationDate: enrollment.graduationDate,
+            cumulativeGPA: enrollment.cumulativeGPA,
+            credits: enrollment.credits
+          }
+        ))
+        res.status(200).json({ enrollments: data })
+      } else {
+        res.status(404).json({ msg: `Student with id ${id} not found` });
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ msg: 'Internal Server Error' });
+    }
+  }
 
   getStudentById = async (req, res) => {
     const { id } = req.params;
@@ -72,19 +117,18 @@ export class StudentController {
     }
   }
 
-  deleteStudent = async (req, res) => {
+  updateStudentStatus = async (req, res) => {
     const { id } = req.params;
+    const { status } = req.body;
+    const enrolmmentStatus = ['drop', 'active', 'graduated']
+    if (!enrolmmentStatus.includes(status)) {
+      return res.status(400).json({ msg: "Invalid status" })
+    }
     try {
-      await this.studentModel.destroy({
-        where: {
-          id: id
-        }
-      });
-      res.status(200).json({ msg: `Student deleted successfully` });
+      await this.studentEnrollmentModel.update({ status: status }, { where: { id: id } })
+      res.status(200).json({ msg: `Status Updated successfully` });
     } catch (error) {
       res.status(500).json({ msg: 'Internal Server Error' });
     }
-  }
-  updateStudentStatus = async (req, res) => {
   }
 }

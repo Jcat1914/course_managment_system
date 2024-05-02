@@ -17,6 +17,24 @@ export const getStudents = () => {
   });
 };
 
+export const getStudentEnrollments = (id) => {
+  return new Promise((resolve, reject) => {
+    fetch(`${baseUrl}/student/enrollment/${id}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch student enrollments');
+        }
+        return response.json();
+      })
+      .then(enrollments => {
+        resolve(enrollments);
+      })
+      .catch(error => {
+        reject(new Error(error.message));
+      });
+  });
+};
+
 export const deleteStudent = async (id) => {
   try {
     const response = await fetch(`${baseUrl}/student/${id}`, {
