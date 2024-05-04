@@ -5,10 +5,15 @@ import { useForm } from "react-hook-form";
 import { CloseModalButton } from "../../../../component/closeModalButton";
 import { usePrograms } from "../../../../customHooks/usePrograms";
 import { baseUrl } from "../../../../config/api";
+import { useStudentEnrollment } from "../../../../customHooks/useStudentEnrollment";
 
 
 export const AddEnrollmentModal = ({ studentId, isModalOpen, setIsModalOpen }) => {
   const { programs } = usePrograms()
+  const { enrollments } = useStudentEnrollment(studentId)
+  const studentPrograms = enrollments?.enrollments?.map(enrollment => enrollment.programId)
+  const filteredPrograms = programs?.filter(program => !studentPrograms?.includes(program.id))
+  console.log(filteredPrograms)
 
   const {
     register,
@@ -24,7 +29,7 @@ export const AddEnrollmentModal = ({ studentId, isModalOpen, setIsModalOpen }) =
       name: 'programId',
       type: 'select',
       defaultValue: '',
-      options: programs,
+      options: filteredPrograms,
       register: register, // Pass register function directly
       validators: [],
       errors: {},
@@ -61,8 +66,6 @@ export const AddEnrollmentModal = ({ studentId, isModalOpen, setIsModalOpen }) =
         })
       const data = await response.json()
       alert(data.msg)
-
-
     } catch (error) {
       console.log(error)
       alert(error.mesaage)

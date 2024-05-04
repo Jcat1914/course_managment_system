@@ -18,5 +18,4 @@ export const useUserStore = create((set) => ({
     set((state) => ({
       users: state.users.filter((user) => user.id !== id),
     })),
-
 }))

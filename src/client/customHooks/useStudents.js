@@ -8,9 +8,9 @@ export const useStudents = () => {
   const { setStudents } = useStudentStore();
   useEffect(() => {
     getStudents()
-      .then((students) => {
+      .then((data) => {
         setLoading(false);
-        setStudents(students);
+        setStudents(data.students)
       })
       .catch((error) => {
         setError(error.message);

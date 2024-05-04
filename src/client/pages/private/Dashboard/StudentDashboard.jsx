@@ -28,6 +28,7 @@ export const StudentDashboard = () => {
   }
   const displayStudentEnrollment = (e) => {
     setSelectedStudent(e)
+    console.log(e)
     setShowActions(true)
     setShowStudentEnrollment(true)
   }
@@ -56,7 +57,7 @@ export const StudentDashboard = () => {
               { key: 'country', label: 'Country' },
               { key: 'DOB', label: 'DOB' },
             ]}
-              data={students && students.students}
+              data={students && students}
               title={'Students Info'}
               onRowClick={displayStudentEnrollment} />
             <AddEnrollmentModal studentId={selectedStudent.id} isModalOpen={showEnrollmentModal} setIsModalOpen={setShowEnrollmentModal} />

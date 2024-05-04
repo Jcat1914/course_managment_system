@@ -19,5 +19,5 @@ export const useFaculties = () => {
   useEffect(() => {
     fetchFaculties();
   }, []);
-  return { professors, loading, error };
+  return { loading, error };
 }

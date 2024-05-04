@@ -3,9 +3,12 @@ import { DashboardContent } from '../../../component/DashboardContent/DashboardC
 import { AddButton } from './components/AddButton';
 import { useFaculties } from '../../../customHooks/useFaculties';
 import { Table } from '../../../component/Table/Table';
+import { useFacultyStore } from '../../../stores/facultyStore';
 
 export const FacultyDashboard = () => {
-  const { professors, loading } = useFaculties();
+  const { loading } = useFaculties();
+  const { professors } = useFacultyStore()
+
   function openAddPage(e) {
     e.preventDefault();
     navigate('add')

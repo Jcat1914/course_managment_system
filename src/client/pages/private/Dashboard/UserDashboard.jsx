@@ -6,7 +6,8 @@ import { useUserStore } from "../../../stores/userStore";
 import { AddButton } from "./components/AddButton";
 import { useNavigate } from 'react-router-dom';
 export const UserDashboard = () => {
-  const { users, loading } = useUsers();
+  const { loading } = useUsers();
+  const { users } = useUserStore();
   const navigate = useNavigate();
 
   const openAddPage = (e) => {
@@ -32,12 +33,10 @@ export const UserDashboard = () => {
               { key: 'phoneNumber', label: 'Phone Number' },
               { key: 'role', label: 'Role' },
             ]}
-              data={users.users}
+              data={users}
               title={'Users'}
               onRowClick={openEditPage} />
-
           </>
-
         )}
       </section>
     </DashboardContent>

@@ -65,9 +65,9 @@ export const StudentEnrollmentInfo = ({ selectedStudent, state }) => {
     }
   }
   return (
-    <div className='flex rounded-lg bg-gray-100 p-3 flex-col gap-3 '>
+    <div className='grid grid-cols-2 rounded-lg bg-gray-100 p-4 gap-2'>
       {enrollments?.enrollments?.map((enrollment) => (
-        <div className='grid grid-cols-2'>
+        <div className=''>
           <div className='flex gap-3 flex-col bg-gray-300 justify-center items-center p-4'>
             <h2 className='font-bold font-sans'>Enrollment Information</h2>
             <h3>Program: {enrollment.program} </h3>

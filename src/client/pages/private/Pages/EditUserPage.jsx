@@ -7,6 +7,7 @@ import { modifyUser } from '../../../services/userService.js'
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../../stores/userStore.js';
 import { useParams } from 'react-router-dom';
+import { baseUrl } from '../../../config/api.js';
 
 export const EditUserPage = () => {
   const {
@@ -17,19 +18,17 @@ export const EditUserPage = () => {
     reset,
   } = useForm()
 
-  const { users } = useUserStore()
+  const { users, updateUser } = useUserStore()
 
   const { id } = useParams()
   console.log(users.users)
 
   const getUserById = (id) => {
-    return users.users.find((user) => user.id == id)
+    return users.find((user) => user.id == id)
   }
 
   const user = getUserById(id)
   console.log(user)
-  const { updateUser } = useUserStore()
-
 
   const navigate = useNavigate()
   const editUserFields = [
@@ -96,19 +95,44 @@ export const EditUserPage = () => {
   ];
   const handleEdit = (formData) => {
     modifyUser(formData)
-      .then((updateUser) => {
-        updateUser(updateUser)
-        navigate(-2)
+      .then((updatedUser) => {
+        updateUser(updatedUser)
+        navigate(-1)
       })
       .catch((error) => {
         console.error('Error adding user:', error.message);
       });
   };
 
+  async function destroyUser(id) {
+    try {
+      const response = await fetch(`${baseUrl}/users/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const data = await response.json()
+      if (data.err) {
+        throw new Error(data.err)
+      }
+      navigate(-2)
+      console.log(users)
+
+    } catch (error) {
+      console.log(error)
+      alert('An error occurred, please try again')
+    }
+  }
+
   return (
     <>
       <BackButton />
-      <Form fields={editUserFields} onSubmit={handleSubmit(handleEdit)} />
+      <article className='flex flex-col justify-center items-center'>
+        <button onClick={() => destroyUser(id)}
+          className='bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded'>Delete User</button>
+        <Form fields={editUserFields} onSubmit={handleSubmit(handleEdit)} />
+      </article >
     </>
   );
 

@@ -83,7 +83,6 @@ export const EditEnrollmentModal = ({ enrollmentInfo, isModalOpen, setIsModalOpe
 
   async function handleEdit(formData) {
     delete formData.program
-    console.log(formData)
     try {
       const response = await fetch(`${baseUrl}/student/enrollment/${enrollmentInfo.id}`,
         {
@@ -94,10 +93,8 @@ export const EditEnrollmentModal = ({ enrollmentInfo, isModalOpen, setIsModalOpe
           body: JSON.stringify(formData)
         })
       const data = await response.json()
-      console.log(data)
-      if (!data.ok) {
-        throw new Error(data.err)
-      }
+      alert(data.msg)
+      setIsModalOpen(false)
     } catch (error) {
       console.log(error)
       alert(error.mesaage)
