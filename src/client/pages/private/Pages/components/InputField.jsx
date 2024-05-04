@@ -29,8 +29,8 @@ const InputField = ({
           )}
         >
           {options && options.map((option) => (
-            <option key={option} value={option}>
-              {option}
+            <option key={typeof option === 'object' ? option.name : option} value={typeof option === 'object' ? option.id : option}>
+              {typeof option === 'object' ? option.name : option}
             </option>
           ))}
         </select>

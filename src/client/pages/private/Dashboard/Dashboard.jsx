@@ -13,7 +13,7 @@ export const Dashboard = () => {
         <ul className="bg-blue-50 flex gap-7 items-center justify-around p-2">
           <li><Link to={`${prefix}/${PrivateRoutes.USER}`} >User</Link></li>
           <li><Link to={`${prefix}/${PrivateRoutes.STUDENT}`} >Students</Link></li>
-          <li>Faculty</li>
+          <li><Link to={`${prefix}/${PrivateRoutes.FACULTY}`}>Faculty</Link></li>
           <li>Program</li>
           <li>Courses</li>
           <li>Rooms</li>

@@ -2,8 +2,9 @@ import React from 'react';
 import { Form } from './components/Form';
 import { useForm } from 'react-hook-form';
 import { BackButton } from './components/BackButton';
-import { addUser } from '../../../services/userService.js'
+import { registerUser } from '../../../services/userService.js'
 import { useNavigate } from 'react-router-dom';
+import { useUserStore } from '../../../stores/userStore.js';
 
 export const AddUserPage = () => {
   const {
@@ -14,6 +15,7 @@ export const AddUserPage = () => {
     reset,
   } = useForm()
   const navigate = useNavigate()
+  const { users, addUser } = useUserStore()
   const addUserFields = [
     {
       label: 'First Name',
@@ -72,9 +74,10 @@ export const AddUserPage = () => {
     },
   ];
   const handleAdd = (formData) => {
-    addUser(formData)
+    registerUser(formData)
       .then((newUser) => {
-        console.log('User added successfully:', newUser);
+        console.log(users)
+        addUser(newUser.user)
         navigate(-1)
       })
       .catch((error) => {
@@ -85,7 +88,7 @@ export const AddUserPage = () => {
   return (
     <>
       <BackButton />
-      <Form fields={addUserFields} onSubmit={handleSubmit(handleAdd)} />
+      <Form fields={addUserFields} title='Add User' onSubmit={handleSubmit(handleAdd)} />
     </>
   );
 

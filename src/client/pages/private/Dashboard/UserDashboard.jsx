@@ -6,8 +6,7 @@ import { useUserStore } from "../../../stores/userStore";
 import { AddButton } from "./components/AddButton";
 import { useNavigate } from 'react-router-dom';
 export const UserDashboard = () => {
-  const { loading } = useUsers();
-  const { users } = useUserStore()
+  const { users, loading } = useUsers();
   const navigate = useNavigate();
 
   const openAddPage = (e) => {

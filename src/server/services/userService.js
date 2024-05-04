@@ -18,8 +18,15 @@ export class UserService {
       if (!user) {
         throw new Error('User not found')
       }
-      data.password = user.password
-      return await user.update(data)
+      await user.update(data)
+      return {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        role: user.role
+      }
     } catch (error) {
       throw new Error(error.message)
     }

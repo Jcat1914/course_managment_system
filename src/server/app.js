@@ -32,10 +32,8 @@ export const createApp = ({ models, services }) => {
   app.use('/api/v1/program', createProgramRouter(services.programService))
   app.get('/api/v1/country', async (req, res) => {
     try {
-
       const countries = await models.Country.findAll();
-      const data = countries.map(country => country.name)
-      res.status(200).json(data);
+      res.status(200).json(countries);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

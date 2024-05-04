@@ -14,13 +14,13 @@ export const Table = ({ columns, data, onRowClick, title }) => {
     return value; // display the final value
   };
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto max-h-96">
       <h2 className="text-lg font-semibold mb-2">{title}</h2>
       <table className="w-full border-collapse rounded-lg">
         <thead>
           <tr className="bg-gray-200 text-gray-800 text-sm">
             {columns && columns.map((column) => (
-              <th className="py-2 px-4 border border-gray-300">{column.label}</th>
+              <th className="py-2 px-3 border border-gray-300">{column.label}</th>
             ))}
           </tr>
         </thead>

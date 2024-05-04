@@ -23,7 +23,8 @@ export class StudentController {
           phoneNumber: student.phoneNumber,
           country: student.country.name,
           DOB: student.DOB,
-          gender: student.gender
+          gender: student.gender,
+          countryId: student.countryId
         }
       ))
 
@@ -66,6 +67,19 @@ export class StudentController {
     }
   }
 
+  updateEnrollment = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const enrollment = await this.studentEnrollmentModel.findByPk(id);
+      const validEnrollment = validationService.validateData(req.body, enrollmentSchema);
+      await enrollment.update(validEnrollment);
+      res.status(200).json({ msg: 'Enrollment updated successfully', enrollment: enrollment });
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ msg: 'Internal Server Error' });
+    }
+  }
+
   getStudentById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -102,18 +116,38 @@ export class StudentController {
       }
     }
   }
+  addEnrollment = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const validEnrollment = validationService.validateData(req.body, enrollmentSchema);
+      if (validEnrollment.error) {
+        throw new ValidationError(validEnrollment.error);
+      }
+      validEnrollment.studentId = id;
+      await this.studentEnrollmentModel.create(validEnrollment);
+      res.status(201).json({ msg: "Enrollment added successfully" });
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        res.status(403).json({ msg: "Invalid data", error: error.message });
+      } else {
+        console.log(error)
+        res.status(500).json({ msg: "Internal Server Error" });
+      }
+    }
+  }
 
   updateStudent = async (req, res) => {
+    const { id } = req.params;
     try {
-      const validUser = validationService.validate(req.body, studentSchema);
-      const student = await this.studentModel.update(validUser, {
-        where: {
-          id: validUser.id
-        }
-      });
+      const student = await this.studentModel.findByPk(id);
+
+      const validUser = validationService.validateData(req.body, studentSchema);
+      await student.update(validUser);
+
       res.status(200).json({ msg: 'Student updated successfully', student: student });
     } catch (error) {
-      res.status(500).json({ msg: 'Internal Server Error' });
+      console.log(error)
+      res.status(500).json({ err: 'Internal Server Error' });
     }
   }
 

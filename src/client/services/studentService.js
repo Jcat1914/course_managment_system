@@ -48,39 +48,40 @@ export const deleteStudent = async (id) => {
   }
 
 }
-export const modifyStudent = (user) => {
+export const modifyStudent = (student) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch(`${baseUrl}/student/${user.id}`, {
+      const response = await fetch(`${baseUrl}/student/${student.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify(student),
       });
       if (!response.ok) {
-        throw new Error('Failed to update user');
+        throw new Error('Failed to update student');
       }
       const updatedUser = await response.json();
       resolve(updatedUser);
     } catch (error) {
-      reject(new Error('Error updating user: ' + error.message));
+      reject(new Error('Error updating student: ' + error.message));
     }
   });
 };
 
-export const addStudent = (user) => {
+export const addStudent = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
+      console.log(data);
       const response = await fetch(`${baseUrl}/student/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify(data),
       });
-      const newUser = await response.json();
-      resolve(newUser);
+      const newStudent = await response.json();
+      resolve(newStudent);
     } catch (error) {
       reject(new Error(error.message));
     }

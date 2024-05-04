@@ -28,8 +28,8 @@ export const deleteUser = async (id) => {
   } catch (error) {
     throw new Error(err.message)
   }
-
 }
+
 export const modifyUser = (user) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -51,7 +51,7 @@ export const modifyUser = (user) => {
   });
 };
 
-export const addUser = (user) => {
+export const registerUser = (user) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(`${baseUrl}/auth/register`, {
