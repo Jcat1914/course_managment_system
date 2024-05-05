@@ -10,7 +10,6 @@ export const StudentEnrollmentInfo = ({ selectedStudent, state }) => {
 
   const [isEditOpen, setEditOpen] = useState(false)
 
-
   async function dropStudent(enrollmentId) {
     try {
       const response = await fetch(`${baseUrl}/student/enrollment/${enrollmentId}`,

@@ -2,16 +2,19 @@ import { sequelize } from "../database/conexion.js";
 import { Faculty } from "./Faculty.js";
 import { DataTypes } from "sequelize";
 
-export const FacultyAvailability = sequelize.define("facultyAvailability", {
+export const FacultyAvailability = sequelize.define("facultyAvailabilities", {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
   facultyId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    primaryKey: true,
   },
   day: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    primaryKey: true
   },
   startTime: {
     type: DataTypes.TIME,
@@ -21,6 +24,11 @@ export const FacultyAvailability = sequelize.define("facultyAvailability", {
     type: DataTypes.TIME,
     allowNull: false
   },
+  available: {
+    type: DataTypes.BOOLEAN(),
+    allowNull: false,
+    defaultValue: true
+  }
 });
 
 FacultyAvailability.belongsTo(Faculty);

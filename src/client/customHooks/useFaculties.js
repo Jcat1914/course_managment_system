@@ -2,7 +2,7 @@ import { useFacultyStore } from "../stores/facultyStore";
 import { baseUrl } from "../config/api";
 import { useState, useEffect } from "react";
 export const useFaculties = () => {
-  const { professors, setProfessors } = useFacultyStore()
+  const { setProfessors } = useFacultyStore()
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   async function fetchFaculties() {

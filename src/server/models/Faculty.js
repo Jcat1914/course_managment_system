@@ -35,6 +35,10 @@ export const Faculty = sequelize.define(
       type: DataTypes.DATE,
       allowNull: false
     },
+    status: {
+      type: DataTypes.ENUM('active', 'inactive'),
+      defaultValue: 'active'
+    }
   }
 )
 Faculty.belongsToMany(Course, { through: 'facultyCourses' })

@@ -8,6 +8,7 @@ export const facultySchema = Joi.object({
   institutionalEmail: Joi.string().email().required().max(64),
   personalEmail: Joi.string().email().required().max(64),
   DOB: Joi.date().iso().required(),
+  status: Joi.string().valid('active', 'inactive'),
   createdAt: Joi.date().iso().optional(),
   updatedAt: Joi.date().iso().optional(),
 }) // Ignore unknown fields

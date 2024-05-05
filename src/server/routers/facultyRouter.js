@@ -9,9 +9,14 @@ export const createFacultyRouter = (facultyService) => {
   facultyRouter.get('/:id/courses', facultyController.getFacultyCourses);
   facultyRouter.post('/add', facultyController.createFaculty);
   facultyRouter.post('/:id/courses', facultyController.addFacultyCourses);
-  facultyRouter.delete('/:id/:courseId', facultyController.deleteFacultyCourse);
+  facultyRouter.delete('/availability/:availabilityId', facultyController.deleteFacultyAvailability);
+  facultyRouter.delete('/:id/course/:courseId', facultyController.deleteFacultyCourse);
   facultyRouter.put('/:id', facultyController.updateFaculty);
   facultyRouter.put('/:id/credentials', facultyController.updateFacultyCredentials);
+  facultyRouter.put('/availability/:id', facultyController.updateFacultyAvailability);
+
+  facultyRouter.get('/:id/availability', facultyController.getFacultyAvailabilities);
+  facultyRouter.post('/:id/availability', facultyController.addFacultyAvailabilities);
 
 
   return facultyRouter;
