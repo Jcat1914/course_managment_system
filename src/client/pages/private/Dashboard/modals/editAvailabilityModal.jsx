@@ -13,7 +13,6 @@ export const EditAvailabilityModal = ({ availability, isModalOpen, setIsModalOpe
     formState: { errors },
   } = useForm({ initialValues: availability })
   const { updateProfessorAvailability, deleteProfessorAvailability, professors } = useFacultyStore()
-  console.log(professors)
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
   const editAvailabiltyFields = [
@@ -72,7 +71,6 @@ export const EditAvailabilityModal = ({ availability, isModalOpen, setIsModalOpe
       setIsModalOpen(false)
       alert(data.msg)
       updateProfessorAvailability(availability.facultyId, availability.id, payload.availability)
-      console.log(professors)
     } catch (error) {
       console.log(error)
       alert(error.mesaage)

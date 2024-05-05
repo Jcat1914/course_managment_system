@@ -11,6 +11,7 @@ import { convertNumToDay } from '../../../helpers/dayConversion'
 import { AddAvailabilityModal } from './modals/addAvailabilityModal';
 import { AddFacultyCourseModal } from './modals/addFacultyCourseModal';
 import { EditAvailabilityModal } from './modals/editAvailabilityModal';
+import { DeleteFacultyCourseModal } from './modals/DeleteFacultyCourseModal';
 export const FacultyDashboard = () => {
 
   const { loading } = useFaculties();
@@ -20,8 +21,10 @@ export const FacultyDashboard = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [showActions, setShowActions] = useState(false);
   const [isAddCourseModalOpen, setIsAddCourseModalOpen] = useState(false);
+  const [openDeleteCourseModal, setOpenDeleteCourseModal] = useState(false)
   const [selectedProfessor, setSelectedProfessor] = useState(null)
   const [openEditAvailabilityModal, setOpenEditAvailabilityModal] = useState(false)
+  const [selectedCourse, setSelectedCourse] = useState({})
   const [availability, setAvailability] = useState({})
 
   function openAddModal(e) {
@@ -49,7 +52,9 @@ export const FacultyDashboard = () => {
   }
 
   function handleCourseEdit(course) {
-
+    console.log(course)
+    setSelectedCourse(course)
+    setOpenDeleteCourseModal(true)
   }
 
   function openAddCourseModal(e) {
@@ -88,6 +93,7 @@ export const FacultyDashboard = () => {
                 actions={setShowActions}
                 professorId={selectedProfessor.id} isModalOpen={availabilityModalOpen} setIsModalOpen={setAvailabilityModalOpen} />
               <AddFacultyCourseModal facultyId={selectedProfessor.id} isModalOpen={isAddCourseModalOpen} setIsModalOpen={setIsAddCourseModalOpen} />
+              <DeleteFacultyCourseModal values={selectedCourse} isModalOpen={openDeleteCourseModal} setIsModalOpen={setOpenDeleteCourseModal} />
               <EditFacultyModal initialValues={selectedProfessor} isModalOpen={isEditModalOpen} setIsModalOpen={setIsEditModalOpen} />
               <h2 className='font-bold text-lg'>Actions</h2>
               <div className='flex p-2 gap-3'>

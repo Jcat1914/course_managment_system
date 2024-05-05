@@ -206,7 +206,7 @@ export class FacultyService {
       if (!faculty) {
         throw new Error('Faculty not found');
       }
-      return await faculty.removeCourses(courseId);
+      return await faculty.removeCourse(courseId);
 
     } catch (error) {
       throw new Error(error.message);
