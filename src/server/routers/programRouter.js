@@ -10,11 +10,9 @@ export const createProgramRouter = (programService) => {
   programRouter.get('/:id/courses', programController.getProgramCourses);
   programRouter.post('/add', programController.createProgram);
   programRouter.post('/:id/courses', programController.addProgramCourses);
-  programRouter.delete('/:id/:courseId', programController.deleteProgramCourse);
+  programRouter.delete('/:id/course/:courseId', programController.deleteProgramCourse);
   programRouter.put('/:id', programController.updateProgram);
   programRouter.delete('/:id', programController.deleteProgram);
-
-
 
   return programRouter;
 }

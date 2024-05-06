@@ -5,7 +5,7 @@ export class ProgramService {
   getPrograms = async () => {
     try {
       console.log(this.Program)
-      return await this.Program.findAll();
+      return await this.Program.findAll({ include: 'courses' })
     } catch (error) {
       throw new Error("Could not fetch programs")
     }
@@ -62,7 +62,10 @@ export class ProgramService {
       if (!program) {
         throw new Error('Program not found');
       }
-      return await program.update(data);
+      await program.update(data)
+      await program.reload({ include: 'courses' });
+
+      return program;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -93,6 +96,4 @@ export class ProgramService {
       throw new Error("Could not delete program")
     }
   }
-
-
 }

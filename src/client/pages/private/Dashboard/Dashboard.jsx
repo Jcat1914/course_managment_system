@@ -14,9 +14,8 @@ export const Dashboard = () => {
           <li><Link to={`${prefix}/${PrivateRoutes.USER}`} >User</Link></li>
           <li><Link to={`${prefix}/${PrivateRoutes.STUDENT}`} >Students</Link></li>
           <li><Link to={`${prefix}/${PrivateRoutes.FACULTY}`}>Faculty</Link></li>
-          <li>Program</li>
-          <li>Courses</li>
-          <li>Rooms</li>
+          <li><Link to={`${prefix}/${PrivateRoutes.BUILDING}`}>Building</Link></li>
+          <li><Link to={`${prefix}/${PrivateRoutes.PROGRAM}`}>Program</Link></li>
           <li><Link to={`${prefix}/${PrivateRoutes.TERM}`}>Term</Link></li>
         </ul>
         <Outlet />

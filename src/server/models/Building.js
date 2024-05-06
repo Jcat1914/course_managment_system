@@ -1,6 +1,6 @@
 import { sequelize } from "../database/conexion.js";
 import { DataTypes } from "sequelize";
-export const Buildings = sequelize.define(
+export const Building = sequelize.define(
   "buildings",
   {
     id: {

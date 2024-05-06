@@ -5,9 +5,11 @@ import { createCourseRouter } from "./routers/courseRouter.js";
 import { createAuthRouter } from "./routers/authRouter.js";
 import { createFacultyRouter } from "./routers/facultyRouter.js";
 import { createUserRouter } from "./routers/userRouter.js";
+import { createBuildingRouter } from "./routers/buildingRouter.js"
 import ViteExpress from "vite-express";
 import { createProgramRouter } from "./routers/programRouter.js";
 import { createTermRouter } from "./routers/termRouter.js";
+import { createRoomRouter } from "./routers/roomRouter.js";
 
 export const createApp = ({ models, services }) => {
   const app = express();
@@ -31,6 +33,8 @@ export const createApp = ({ models, services }) => {
   app.use('/api/v1/course', createCourseRouter({ Course: models.Course }));
   app.use('/api/v1/program', createProgramRouter(services.programService))
   app.use('/api/v1/term', createTermRouter(services.termService))
+  app.use('/api/v1/building', createBuildingRouter(services.buildingService))
+  app.use('/api/v1/room', createRoomRouter(services.roomService))
   app.get('/api/v1/country', async (req, res) => {
     try {
       const countries = await models.Country.findAll();

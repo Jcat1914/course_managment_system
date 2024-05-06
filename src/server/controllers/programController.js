@@ -43,7 +43,7 @@ export class ProgramController {
       const { id } = req.params;
       const validatedProgram = await validationService.validateData(req.body, programSchema);
       const program = await this.programService.updateProgram(id, validatedProgram);
-      return res.status(200).json({ program });
+      return res.status(200).json({ msg: "Program Updated successfully", program });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -51,15 +51,10 @@ export class ProgramController {
 
   createProgram = async (req, res) => {
     try {
-      const { program, courses } = req.body
+      const { program } = req.body
       const validatedProgram = validationService.validateData(program, programSchema);
       const newProgram = await this.programService.createProgram(validatedProgram);
-      if (courses) {
-        const programWithCourses = await this.programService.addProgramCourses(newProgram.id, courses);
-        res.status(201).json(programWithCourses)
-      } else {
-        res.status(201).json(newProgram);
-      }
+      res.status(202).json({ msg: 'Program created successfully', newProgram })
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -70,7 +65,7 @@ export class ProgramController {
       const { id } = req.params;
       const { courses } = req.body;
       const program = await this.programService.addProgramCourses(id, courses);
-      res.status(200).json(program);
+      res.status(200).json({ msg: `Courses added to program`, program });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

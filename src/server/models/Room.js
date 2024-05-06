@@ -1,6 +1,6 @@
 import { sequelize } from '../database/conexion.js'
 import { DataTypes } from 'sequelize'
-import { Buildings } from './Building.js'
+import { Building } from './Building.js'
 
 export const Room = sequelize.define(
   "rooms",
@@ -11,7 +11,7 @@ export const Room = sequelize.define(
       primaryKey: true,
       allowNull: false,
     },
-    room_code: {
+    roomCode: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -21,9 +21,9 @@ export const Room = sequelize.define(
     },
     status: {
       type: DataTypes.ENUM('active', 'inactive'),
-      allowNull: false,
+      defaultValue: 'active',
     },
   }
 )
-Room.belongsTo(Buildings)
-Buildings.hasMany(Room) 
+Room.belongsTo(Building)
+Building.hasMany(Room) 

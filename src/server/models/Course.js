@@ -11,7 +11,7 @@ export const Course = sequelize.define(
       autoIncrement: true
     },
     name: {
-      type: DataTypes.STRING(32),
+      type: DataTypes.STRING(128),
       allowNull: false
     },
     description: {
