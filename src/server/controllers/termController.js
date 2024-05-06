@@ -1,40 +1,56 @@
+import { validationService } from "../services/index.js";
 export class TermController {
-  constructor(termService) {
-    this.termService = termService;
+  constructor(TermService) {
+    this.termService = TermService
   }
-  async getTerms(req, res) {
+  getTerms = async (req, res) => {
     try {
       const terms = await this.termService.getTerms();
-      res.json(terms);
+      res.json({ terms });
     } catch (error) {
-      res.status(500).send(error.message);
+      res.status(500).json({ err: error.message });
     }
   }
-  async getTerm(req, res) {
+
+  getTermById = async (req, res) => {
     try {
-      const term = await this.termService.getTerm(req.params.id);
+      const term = await this.termService.getTermById(req.params.id);
       res.json(term);
     } catch (error) {
       res.status(500).send(error.message);
     }
   }
-  async createTerm(req, res) {
+
+  createTerm =
+    async (req, res) => {
+      try {
+        const validTerm = await validationService.validateData(req.body)
+        const term = await this.termService.createTerm(validTerm);
+        res.json(term);
+      } catch (error) {
+        if (error.name === 'ValidationError') {
+          res.status(400).json({ err: error.message });
+        } else {
+          res.status(500).send(error.message);
+        }
+      }
+    }
+
+  updateTerm = async (req, res) => {
     try {
-      const term = await this.termService.createTerm(req.body);
+      const validTerm = await validationService.validateData(req.body)
+      const term = await this.termService.updateTerm(req.params.id, validTerm);
       res.json(term);
     } catch (error) {
-      res.status(500).send(error.message);
+      if (error.name === 'ValidationError') {
+        res.status(400).json({ err: error.message });
+      } else {
+        res.status(500).send(error.message);
+      }
     }
   }
-  async updateTerm(req, res) {
-    try {
-      const term = await this.termService.updateTerm(req.params.id, req.body);
-      res.json(term);
-    } catch (error) {
-      res.status(500).send(error.message);
-    }
-  }
-  async deleteTerm(req, res) {
+
+  deleteTerm = async (req, res) => {
     try {
       const term = await this.termService.deleteTerm(req.params.id);
       res.json(term);

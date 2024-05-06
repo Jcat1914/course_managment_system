@@ -7,10 +7,10 @@ import { createFacultyRouter } from "./routers/facultyRouter.js";
 import { createUserRouter } from "./routers/userRouter.js";
 import ViteExpress from "vite-express";
 import { createProgramRouter } from "./routers/programRouter.js";
+import { createTermRouter } from "./routers/termRouter.js";
 
 export const createApp = ({ models, services }) => {
   const app = express();
-
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(
@@ -30,6 +30,7 @@ export const createApp = ({ models, services }) => {
   app.use("/api/v1/faculty", createFacultyRouter(services.facultyService))
   app.use('/api/v1/course', createCourseRouter({ Course: models.Course }));
   app.use('/api/v1/program', createProgramRouter(services.programService))
+  app.use('/api/v1/term', createTermRouter(services.termService))
   app.get('/api/v1/country', async (req, res) => {
     try {
       const countries = await models.Country.findAll();
