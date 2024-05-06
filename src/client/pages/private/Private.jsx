@@ -12,6 +12,7 @@ import { AddStudentPage } from "./Pages/addStudentPage.jsx";
 import { TermDashboard } from "./Dashboard/TermDashboard.jsx";
 import { BuildingDashboard } from "./Dashboard/BuildingRoomsDashboard.jsx";
 import { ProgramDashboard } from "./Dashboard/ProgramDashboard.jsx";
+import { CourseDashboard } from "./Dashboard/CourseDashboard.jsx";
 
 export function Private() {
   return (
@@ -23,6 +24,7 @@ export function Private() {
         <Route path={PrivateRoutes.USER} element={<UserDashboard />} />
         <Route path={PrivateRoutes.BUILDING} element={<BuildingDashboard />} />
         <Route path={PrivateRoutes.PROGRAM} element={<ProgramDashboard />} />
+        <Route path={PrivateRoutes.COURSE} element={<CourseDashboard />} />
         <Route path={`${PrivateRoutes.TERM}`} element={<TermDashboard />} />
         <Route path={`${PrivateRoutes.USER}/add`} element={<AddUserPage />} />
         <Route path={`${PrivateRoutes.USER}/edit/:id`} element={<EditUserPage />} />

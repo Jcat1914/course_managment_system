@@ -1,7 +1,8 @@
 import { baseUrl } from '../config/api';
 import { useState, useEffect } from 'react';
+import { useCourseStore } from '../stores/courseStore';
 export const useCourses = () => {
-  const [courses, setCourses] = useState([]);
+  const { courses, setCourses } = useCourseStore();
 
   useEffect(() => {
     fetch(`${baseUrl}/course`)

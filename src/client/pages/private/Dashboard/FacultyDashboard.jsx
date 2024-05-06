@@ -12,6 +12,7 @@ import { AddAvailabilityModal } from './modals/addAvailabilityModal';
 import { AddFacultyCourseModal } from './modals/addFacultyCourseModal';
 import { EditAvailabilityModal } from './modals/editAvailabilityModal';
 import { DeleteFacultyCourseModal } from './modals/DeleteFacultyCourseModal';
+import { useEffect } from 'react';
 export const FacultyDashboard = () => {
 
   const { loading } = useFaculties();
@@ -26,6 +27,16 @@ export const FacultyDashboard = () => {
   const [openEditAvailabilityModal, setOpenEditAvailabilityModal] = useState(false)
   const [selectedCourse, setSelectedCourse] = useState({})
   const [availability, setAvailability] = useState({})
+
+  function updateProfessor() {
+    if (!selectedProfessor?.id) return
+    const newSelectedProfessor = professors.find(professor => professor.id === selectedProfessor.id)
+    setSelectedProfessor(newSelectedProfessor)
+  }
+
+  useEffect(() => {
+    updateProfessor()
+  }, [professors])
 
   function openAddModal(e) {
     e.preventDefault();
@@ -118,7 +129,7 @@ export const FacultyDashboard = () => {
                     </thead>
                     <tbody>
                       {
-                        selectedProfessor.facultyAvailabilities.map(availability => (
+                        selectedProfessor?.facultyAvailabilities?.map(availability => (
                           <tr onClick={() => handleAvailabilityEdit(availability)}>
                             <th>{convertNumToDay(availability.day)}</th>
                             <th>{availability.startTime}</th>

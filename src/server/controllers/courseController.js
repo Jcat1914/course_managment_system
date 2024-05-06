@@ -61,7 +61,6 @@ export class CourseController {
           id: req.params.id
         }
       });
-      console.lgo(course)
       res.status(200).json({ msg: 'Course deleted successfully' });
     } catch (error) {
       res.status(500).json({ msg: 'Internal Server Error' });
