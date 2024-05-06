@@ -5,12 +5,14 @@ import { Table } from '../../../component/Table/Table';
 import { DashboardContent } from '../../../component/DashboardContent/DashboardContent';
 //import { AddProgramModal } from './modals/AddProgramModal';
 //``import { EditProgramModal } from './modals/EditProgramModal';
-//``import { baseUrl } from '../../../config/api';
+import { baseUrl } from '../../../config/api';
 //``import { EditprogramModal } from './modals/EditRoomModal';
 import { usePrograms } from '../../../customHooks/usePrograms';
 import { AddProgramModal } from './modals/AddProgramModal';
 import { EditProgramModal } from './modals/EditProgramModal';
 import { AddProgramCoursesModal } from './modals/addProgramCoursesModal';
+import { EditCourseModal } from './modals/EditCourseModal';
+import { useProgramStore } from '../../../stores/programStore';
 export const ProgramDashboard = () => {
   const [showAddProgramModal, setShowAddProgramModal] = useState(false)
   const [selectedProgram, setSelectedProgram] = useState({})
@@ -20,8 +22,10 @@ export const ProgramDashboard = () => {
   const [showCourseActions, setShowCourseActions] = useState(false)
   const [showEditProgramModal, setShowEditProgramModal] = useState(false)
   const [showAddCourseModal, setShowAddCourseModal] = useState(false)
+  const [showEditCourseModal, setShowEditCourseModal] = useState(false)
 
   const { programs } = usePrograms()
+  const { deleteProgramCourse } = useProgramStore()
 
   function showCourses(e) {
     setSelectedProgram(e)
@@ -30,9 +34,24 @@ export const ProgramDashboard = () => {
   }
   function openAddProgramModal(e) {
     setShowAddProgramModal(true)
+    setShowCourseActions(false)
+    setShowProgramCourses(false)
+  }
+  function updateCourses() {
+    if (!selectedProgram.id) return
+    const newSelectedProgram = programs.find(program => program.id === selectedProgram.id)
+    setSelectedProgram(newSelectedProgram)
   }
 
-  function openEditCourseModal(e) { }
+  useEffect(() => {
+    updateCourses()
+  }, [programs])
+
+  function openEditCourseModal(e) {
+    e.preventDefault();
+    setShowEditCourseModal(true)
+  }
+
   function openProgramActions(e) {
     setShowCourseActions(true)
     setSelectedCourse(e)
@@ -50,6 +69,22 @@ export const ProgramDashboard = () => {
 
   async function handleDelete(courseId, programId) {
     console.log(courseId, programId)
+
+    try {
+      const response = await fetch(`${baseUrl}/program/${programId}/course/${courseId}`, {
+        method: 'DELETE',
+      })
+      const data = await response.json()
+      if (data.err) {
+        throw new Error(data.err)
+      }
+      setShowCourseActions(false)
+      deleteProgramCourse(programId, courseId)
+      alert(data.msg)
+    } catch (error) {
+      console.log(error)
+      alert(error.message)
+    }
   }
 
   return (
@@ -116,6 +151,7 @@ export const ProgramDashboard = () => {
                     <button onClick={() => handleDelete(selectedCourse.id, selectedProgram.id)}
                       className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>Delete</button>
                   </div>
+                  <EditCourseModal initialValues={selectedCourse} setIsModalOpen={setShowEditCourseModal} isModalOpen={showEditCourseModal} />
                 </article>
               ) : null}
             </article>
