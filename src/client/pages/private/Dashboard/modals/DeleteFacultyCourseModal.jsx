@@ -1,11 +1,6 @@
 import Modal from "react-modal";
-import { Form } from "../../Pages/components/Form";
 import { useForm } from "react-hook-form";
-import { CloseModalButton } from "../../../../component/closeModalButton";
 import { baseUrl } from "../../../../config/api";
-import { useFacultyStore } from "../../../../stores/facultyStore"
-import { useCourses } from "../../../../customHooks/useCourses";
-import Select from 'react-select'
 
 export const DeleteFacultyCourseModal = ({ values, isModalOpen, setIsModalOpen }) => {
   const {

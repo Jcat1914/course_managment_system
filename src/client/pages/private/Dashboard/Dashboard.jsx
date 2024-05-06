@@ -17,7 +17,7 @@ export const Dashboard = () => {
           <li>Program</li>
           <li>Courses</li>
           <li>Rooms</li>
-          <li>Terms</li>
+          <li><Link to={`${prefix}/${PrivateRoutes.TERM}`}>Term</Link></li>
         </ul>
         <Outlet />
       </main>

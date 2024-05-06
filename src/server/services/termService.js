@@ -24,7 +24,8 @@ export class TermService {
 
   updateTerm = async (id, term) => {
     try {
-      const updatedTerm = await this.termModel.update(term, { where: { id } });
+      await this.termModel.update(term, { where: { id } });
+      const updatedTerm = await this.termModel.findByPk(id);
       return updatedTerm;
     } catch (error) {
       throw new Error("Could not update term");
