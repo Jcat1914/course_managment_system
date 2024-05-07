@@ -15,6 +15,7 @@ export const createFacultyRouter = (facultyService) => {
   facultyRouter.put('/:id/credentials', facultyController.updateFacultyCredentials);
   facultyRouter.put('/availability/:id', facultyController.updateFacultyAvailability);
 
+  facultyRouter.post('/add-from-excel', facultyController.addDataFromExcel);
   facultyRouter.get('/:id/availability', facultyController.getFacultyAvailabilities);
   facultyRouter.post('/:id/availability', facultyController.addFacultyAvailabilities);
 

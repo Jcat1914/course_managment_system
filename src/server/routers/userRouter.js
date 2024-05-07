@@ -7,6 +7,7 @@ export function createUserRouter(userService) {
   studentRouter.get('/', userController.getUsers);
   studentRouter.put('/:id', userController.updateUser)
   studentRouter.delete('/:id', userController.deleteUser);
+  studentRouter.post('/add-from-excel', userController.addUserFromExcel);
 
   return studentRouter;
 }

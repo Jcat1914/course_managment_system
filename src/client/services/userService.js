@@ -30,6 +30,7 @@ export const deleteUser = async (id) => {
   }
 }
 
+
 export const modifyUser = (user) => {
   return new Promise(async (resolve, reject) => {
     try {

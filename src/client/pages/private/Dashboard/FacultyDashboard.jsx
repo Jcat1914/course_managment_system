@@ -13,6 +13,8 @@ import { AddFacultyCourseModal } from './modals/addFacultyCourseModal';
 import { EditAvailabilityModal } from './modals/editAvailabilityModal';
 import { DeleteFacultyCourseModal } from './modals/DeleteFacultyCourseModal';
 import { useEffect } from 'react';
+import { Toaster, toast } from 'sonner'
+import { baseUrl } from '../../../config/api';
 export const FacultyDashboard = () => {
 
   const { loading } = useFaculties();
@@ -32,6 +34,53 @@ export const FacultyDashboard = () => {
     if (!selectedProfessor?.id) return
     const newSelectedProfessor = professors.find(professor => professor.id === selectedProfessor.id)
     setSelectedProfessor(newSelectedProfessor)
+  }
+  const [file, setFile] = useState(null)
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0])
+  }
+  const handleSubmitFile = async (event) => {
+    event.preventDefault()
+
+    if (!file) {
+      alert('Please select a file to upload')
+      return
+    }
+
+    const loadingToastId = toast.loading('Uploading file...')
+
+    const formDataFile = new FormData()
+    formDataFile.append('file', file) // 'file' is the name of the field that the server expects
+
+    try {
+      const response = await fetch(`${baseUrl}/faculty/add-from-excel`, {
+        method: 'POST',
+        body: formDataFile,
+      })
+
+      const data = await response.json()
+
+      toast.dismiss(loadingToastId)
+
+      // Define the promise function that resolves after successful upload
+      const promise = () => new Promise((resolve) => resolve(data))
+
+      // Use toast.promise to handle the success and error states
+      toast.promise(promise, {
+        success: () => {
+          setProfessor([...professors, ...data.createdFaculty])
+          return 'Faculty added successfully'
+        },
+        error: (err) => {
+          console.error('Error:', err)
+          return 'Error adding users'
+        },
+      })
+    } catch (error) {
+      console.error('Error sending the request:', error)
+      toast.error('Error sending the file. Please try again')
+    }
   }
 
   useEffect(() => {
@@ -76,6 +125,23 @@ export const FacultyDashboard = () => {
   return (
     <DashboardContent viewName="Manage Faculty">
       <section className="flex items-center flex-col gap-3">
+        <form onSubmit={handleSubmitFile}>
+          <div className="ml-5 flex items-center ">
+            <input
+              type="file"
+              name="file"
+              accept=".xlsx"
+              className="w-[23rem]  text-sm"
+              onChange={handleFileChange}
+            />
+            <button
+              type="submit"
+              className="m-4 w-20 rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 "
+            >
+              Import
+            </button>
+          </div>
+        </form>
         <AddButton onClick={openAddModal} />
         <AddFacultyModal isModalOpen={isAddModalOpen} setIsModalOpen={setIsAddModalOpen} />
         {loading ? (

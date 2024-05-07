@@ -1,5 +1,8 @@
 import { facultySchema, facultyCredentialsSchema } from '../validationSchemas/index.js'
 import { validationService } from '../services/index.js'
+import multer from 'multer'
+import { parseExcelFile } from '../helpers/parseExcelFile.js'
+import { Faculty } from '../models/Faculty.js';
 export class FacultyController {
   constructor(facultyService) {
     this.facultyService = facultyService;
@@ -20,6 +23,55 @@ export class FacultyController {
       res.status(500).send(error.message);
     }
   }
+
+
+  addDataFromExcel = async (req, res) => {
+    const upload = multer().single('file');
+
+    upload(req, res, async (err) => {
+      if (err) {
+        console.error('Error uploading file:', err);
+        return res.status(500).json({
+          error: 'An error occurred while uploading file',
+        });
+      }
+
+      const file = req.file;
+      if (!file) {
+        return res.status(400).json({ error: 'Missing file' });
+      }
+
+      try {
+        const facultyData = await parseExcelFile(file.buffer);
+        const createdFaculty = [];
+
+        for (const data of facultyData) {
+          let faculty;
+          faculty = await Faculty.create({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            personalEmail: data.personalEmail,
+            institutionalEmail: data.institutionalEmail,
+            phoneNumber: data.phoneNumber,
+            DOB: data.DOB,
+            status: data.status,
+          });
+          await faculty.save();
+          createdFaculty.push(faculty);
+        }
+
+        res.status(201).json({
+          message: 'Students uploaded successfully',
+          createdFaculty
+        });
+      } catch (error) {
+        console.error('Error uploading students:', error);
+        res.status(500).json({
+          error: 'An error occurred while uploading students',
+        });
+      }
+    });
+  };
 
   getFacultyById = async (req, res) => {
     try {

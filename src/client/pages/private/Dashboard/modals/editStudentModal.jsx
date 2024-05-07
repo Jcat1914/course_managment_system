@@ -114,19 +114,18 @@ export const StudentEditForm = ({ initialValues, isModalOpen, setIsModalOpen }) 
   ];
 
   const handleEditSubmit = async (formData) => {
+    console.log('form Data: ' + formData)
     modifyStudent(formData)
       .then((newStudent) => {
         if (!newStudent.student) {
           throw new Error('Error modifying student ' + newStudent.err);
         }
-        console.log(newStudent.student)
-        updateStudent(newStudent.student)
+        updateStudent(newStudent)
         console.log('Student modify successfully:', newStudent);
-        setIsModalOpen(false)
         navigate(-1)
       })
       .catch((error) => {
-        console.error(error.message)
+        console.error('Error modifying student:', error.message);
       });
   }
 

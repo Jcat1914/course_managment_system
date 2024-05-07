@@ -10,10 +10,12 @@ import { StudentEnrollmentInfo } from '../Pages/components/StudentEnrollmentInfo
 import { usePrograms } from '../../../customHooks/usePrograms';
 import { AddEnrollmentModal } from './modals/addEnrollmentModal';
 import { StudentEditForm } from './modals/editStudentModal';
+import { Toaster, toast } from 'sonner'
+import { baseUrl } from '../../../config/api';
 
 export const StudentDashboard = () => {
   const { loading } = useStudents();
-  const { students } = useStudentStore()
+  const { students, setStudents } = useStudentStore()
   const { programs } = usePrograms()
   const [showStudentEnrollment, setShowStudentEnrollment] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -36,11 +38,77 @@ export const StudentDashboard = () => {
   useEffect(() => {
     setShowStudentEnrollment(false)
     setShowActions(false)
-  }, [])
+
+  }, [students])
+  const [file, setFile] = useState(null)
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0])
+  }
+  const handleSubmitFile = async (event) => {
+    event.preventDefault()
+
+    if (!file) {
+      alert('Please select a file to upload')
+      return
+    }
+
+    const loadingToastId = toast.loading('Uploading file...')
+
+    const formDataFile = new FormData()
+    formDataFile.append('file', file) // 'file' is the name of the field that the server expects
+
+    try {
+      const response = await fetch(`${baseUrl}/student/add-from-excel`, {
+        method: 'POST',
+        body: formDataFile,
+      })
+
+      const data = await response.json()
+
+      toast.dismiss(loadingToastId)
+
+      // Define the promise function that resolves after successful upload
+      const promise = () => new Promise((resolve) => resolve(data))
+
+      // Use toast.promise to handle the success and error states
+      toast.promise(promise, {
+        success: () => {
+          setStudents([...students, ...data.createdStudent])
+          setIsModalOpen(false)
+          return 'Students added successfully'
+        },
+        error: (err) => {
+          console.error('Error:', err)
+          return 'Error adding users'
+        },
+      })
+    } catch (error) {
+      console.error('Error sending the request:', error)
+      toast.error('Error sending the file. Please try again')
+    }
+  }
 
   return (
     <DashboardContent viewName="Manage Students">
       <AddButton onClick={openAddPage} />
+      <form onSubmit={handleSubmitFile}>
+        <div className="ml-5 flex items-center ">
+          <input
+            type="file"
+            name="file"
+            accept=".xlsx"
+            className="w-[23rem]  text-sm"
+            onChange={handleFileChange}
+          />
+          <button
+            type="submit"
+            className="m-4 w-20 rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 "
+          >
+            Import
+          </button>
+        </div>
+      </form>
       <section className="">
         {loading ? (
           <div>Loading...</div>

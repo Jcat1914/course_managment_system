@@ -2,9 +2,12 @@ import React from "react";
 import Header from "../../../component/Header/Header";
 import { Outlet, Link } from "react-router-dom";
 import { PrivateRoutes } from "../../../models/routes";
+import { useLoggedUserStore } from "../../../stores/loggedUserStore";
 
 export const Dashboard = () => {
   // element to be rendered in the list of actions
+  const { user } = useLoggedUserStore()
+  console.log(user)
   const prefix = "/private/Dashboard"
   return (
     <>

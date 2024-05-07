@@ -11,6 +11,7 @@ export function createStudentRouter({ Student, StudentEnrollment, Country, Progr
   studentRouter.get('/enrollment/:id', studentController.getStudentEnrollments);
   studentRouter.put('/:id', studentController.updateStudent);
   studentRouter.patch('/enrollment/:id', studentController.updateStudentStatus);
+  studentRouter.post('/add-from-excel', studentController.addDataFromExcel);
 
   return studentRouter;
 }

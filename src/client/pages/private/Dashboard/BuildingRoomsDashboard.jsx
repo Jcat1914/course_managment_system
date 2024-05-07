@@ -60,6 +60,53 @@ export const BuildingDashboard = () => {
     console.log(e)
     setEditRoomModal(true)
   }
+  const [file, setFile] = useState(null)
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0])
+  }
+
+  const handleSubmitFile = async (event) => {
+    event.preventDefault()
+
+    if (!file) {
+      alert('Please select a file to upload')
+      return
+    }
+
+    // Show loading toast
+    const loadingToastId = toast.loading('Uploading file...')
+
+    // create a FormData object to send the file to the server
+    const formDataFile = new FormData()
+    formDataFile.append('file', file)
+
+    try {
+      const response = await fetch(`/api/buildings/excel`, {
+        method: 'POST',
+        body: formDataFile,
+      })
+      const data = await response.json()
+
+      toast.dismiss(loadingToastId)
+
+      const promise = () => new Promise((resolve) => resolve(data))
+
+      toast.promise(promise, {
+        success: () => {
+          setIsModalOpen1(false)
+          return 'Buildings added successfully'
+        },
+        error: (err) => {
+          console.error('Failed to upload file:', err)
+          return 'Failed to upload file'
+        },
+      })
+    } catch (error) {
+      console.error('Error uploading file:', error)
+      toast.error('Error uploading file')
+    }
+  }
 
   async function handleDelete() {
     try {
@@ -86,6 +133,23 @@ export const BuildingDashboard = () => {
     <DashboardContent viewName="Manage Buildings And Rooms">
       <AddButton onClick={openAddBuildingModal} />
       <AddBuildingModal isModalOpen={showAddBuildingModal} setIsModalOpen={setShowAddBuildingModal} />
+      <form onSubmit={handleSubmitFile}>
+        <div className="ml-5 flex items-center ">
+          <input
+            type="file"
+            name="file"
+            accept=".xlsx"
+            className="w-[23rem]  text-sm"
+            onChange={handleFileChange}
+          />
+          <button
+            type="submit"
+            className="m-4 w-20 rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 "
+          >
+            Import
+          </button>
+        </div>
+      </form>
       <section >
         <Table
           columns={[

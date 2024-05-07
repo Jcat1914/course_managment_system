@@ -15,6 +15,8 @@ export const CourseEditModal = ({ initialValues, isModalOpen, setIsModalOpen }) 
     reset
   } = useForm({ defaultValues: initialValues })
 
+  console.log(initialValues)
+
   useEffect(() => {
     reset(initialValues)
   }, [initialValues, reset])

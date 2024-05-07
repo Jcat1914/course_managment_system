@@ -30,7 +30,9 @@ export const CourseDashboard = () => {
     setSelectedCourse(e)
     setShowActions(true)
   }
+
   async function handleDelete(courseId) {
+    e.preventDefault();
     try {
       const response = await fetch(`${baseUrl}/course/${courseId}`, {
         method: 'DELETE',
@@ -48,9 +50,6 @@ export const CourseDashboard = () => {
     }
   }
 
-  useEffect(() => {
-    setSelectedCourse({})
-  }, [courses])
   return (
     <DashboardContent viewName="Manage Courses">
       <AddButton onClick={openAddModal} />
@@ -67,12 +66,12 @@ export const CourseDashboard = () => {
           onRowClick={handleRowClick} />
 
         <AddCourseModal setIsModalOpen={setIsAddModalOpen} isModalOpen={isAddModalOpen} />
-        <CourseEditModal initialValues={selectedCourse} isModalOpen={isEditModalOpen} setIsModalOpen={setIsEditModalOpen} />
         <div className='flex items-center justify-center gap-6'>
           {showActions && (
             <>
               <button className='bg-red-500 text-white rounded p-3' onClick={() => handleDelete(selectedCourse.id)}>Delete</button>
-              <button onClick={openEditModal} className='bg-blue-500 p-3 rounded text-white'>Edit</button>
+              <button onClick={() => openEditModal()} className='bg-blue-500 p-3 rounded text-white'>Edit</button>
+              <CourseEditModal initialValues={selectedCourse} isModalOpen={isEditModalOpen} setIsModalOpen={setIsEditModalOpen} />
             </>
           )}
         </div>

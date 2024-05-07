@@ -11,5 +11,7 @@ export const PrivateRoutes = {
   COURSE: 'Course',
   BUILDING: 'Room',
   TERM: 'Term',
-  USER: 'User'
+  USER: 'User',
+  REGISTRAR: 'Registrar',
+
 }

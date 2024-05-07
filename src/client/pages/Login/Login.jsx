@@ -5,7 +5,8 @@ import { login } from "../../services/authService.js";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { PrivateRoutes } from "../../models/routes.js";
-
+import { useLoggedUserStore } from "../../stores/loggedUserStore.js";
+import { useEffect } from 'react'
 export const Login = () => {
   const {
     register,
@@ -14,23 +15,21 @@ export const Login = () => {
   } = useForm();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
-  const [user, setUser] = useState(null);
+  const { setUser, resetUser } = useLoggedUserStore()
 
   const onSubmit = async (data) => {
     const { username, password } = data;
     try {
       const response = await login(username, password);
-      console.log(response);
       setUser(response.user);
       navigate(`/${PrivateRoutes.PRIVATE}`, { replace: true })
     } catch (error) {
       setError(error.message);
     }
   };
-
   return (
     <>
-      <section className={styles.loginContainer}>
+      <section className="flex bg-gray-300 flex-col items-center justify-center max-w-26">
         <h1>Welcome to The Keiser Course Management System</h1>
         <KeiserLogo />
         <form className={styles.loginForm} onSubmit={handleSubmit(onSubmit)}>

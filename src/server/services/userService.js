@@ -11,6 +11,22 @@ export class UserService {
     }
   }
 
+  addUserFromExcel = async (data) => {
+    try {
+      const user = await this.userModel.create(data)
+      return {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        role: user.role
+      }
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
   //update a given user
   updateUser = async (id, data) => {
     try {

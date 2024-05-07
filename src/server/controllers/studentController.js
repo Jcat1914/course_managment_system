@@ -2,6 +2,9 @@ import { studentSchema } from '../validationSchemas/index.js'
 import { enrollmentSchema } from '../validationSchemas/index.js'
 import { validationService } from '../services/index.js'
 import { ValidationError } from '../helpers/errors.js'
+import multer from 'multer'
+import { parseExcelFile } from '../helpers/parseExcelFile.js'
+import { Student, Country } from '../models/index.js'
 export class StudentController {
   constructor({ Student, StudentEnrollment, Country, Program }) {
     this.studentModel = Student;
@@ -33,6 +36,61 @@ export class StudentController {
       res.status(500).json({ msg: "Could not load students", error: e });
       console.log(e)
     }
+  };
+
+  addDataFromExcel = async (req, res) => {
+    const upload = multer().single('file');
+
+    upload(req, res, async (err) => {
+      if (err) {
+        console.error('Error uploading file:', err);
+        return res.status(500).json({
+          error: 'An error occurred while uploading file',
+        });
+      }
+
+      const file = req.file;
+      if (!file) {
+        return res.status(400).json({ error: 'Missing file' });
+      }
+
+      try {
+        const studentsData = await parseExcelFile(file.buffer);
+        const createdStudents = [];
+
+        for (const studentData of studentsData) {
+          let student;
+          student = await Student.create({
+            id: studentData.id,
+            firstName: studentData.firstName,
+            lastName: studentData.lastName,
+            personalEmail: studentData.personalEmail,
+            institutionalEmail: studentData.institutionalEmail,
+            phoneNumber: studentData.phoneNumber,
+            gender: studentData.gender,
+            DOB: studentData.DOB,
+            countryId: studentData.countryId,
+          });
+          await student.save();
+          createdStudents.push(student);
+        }
+
+        // Reload created students with associated country data
+        await Promise.all(createdStudents.map(async (student) => {
+          await student.reload({ include: Country });
+        }));
+
+        res.status(201).json({
+          message: 'Students uploaded successfully',
+          createdStudents,
+        });
+      } catch (error) {
+        console.error('Error uploading students:', error);
+        res.status(500).json({
+          error: 'An error occurred while uploading students',
+        });
+      }
+    });
   };
 
   getStudentEnrollments = async (req, res) => {

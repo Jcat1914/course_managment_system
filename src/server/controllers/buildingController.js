@@ -29,7 +29,6 @@ export class BuildingController {
       res.status(500).json({ err: error.message });
     }
   }
-
   deleteBuildingRooms = async (req, res) => {
     try {
       const building = await this.buildingService.deleteBuildingRooms(req.params.id, req.body);

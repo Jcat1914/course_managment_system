@@ -61,8 +61,8 @@ export const AddTermModal = ({ isModalOpen, setIsModalOpen }) => {
       }
       setIsModalOpen(false)
       alert(data.msg)
-      console.log(data)
-      addTerm(data.term)
+      console.
+        addTerm(data.term)
     } catch (error) {
       console.log(error)
       alert(error.mesaage)
