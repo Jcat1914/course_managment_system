@@ -5,4 +5,5 @@ export const PublicRoutes = {
 export const PrivateRoutes = {
   PRIVATE: 'private',
   DASHBOARD: 'Dashboard',
+  REGISTRAR: 'Registrar',
 };
