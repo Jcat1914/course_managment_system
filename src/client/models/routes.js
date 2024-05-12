@@ -13,5 +13,5 @@ export const PrivateRoutes = {
   TERM: 'Term',
   USER: 'User',
   REGISTRAR: 'Registrar',
-
+  ADMIN: 'Admin',
 }
