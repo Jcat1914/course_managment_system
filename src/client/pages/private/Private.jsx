@@ -14,25 +14,28 @@ import { BuildingDashboard } from "./Dashboard/BuildingRoomsDashboard.jsx";
 import { ProgramDashboard } from "./Dashboard/ProgramDashboard.jsx";
 import { CourseDashboard } from "./Dashboard/CourseDashboard.jsx";
 import { RoleGuard } from "../../guards/roleGuard.jsx";
-import { useLoggedUserStore } from "../../stores/loggedUserStore.js";
 import { Roles } from "../../models/roles.js";
+import { RegistrarDashboard } from "./Registrar/RegistrarDashboard.jsx";
+
 export function Private() {
-  const { user } = useLoggedUserStore()
   return (
     <RoutesWithNotFound>
       <Route path="/" element={<Navigate to={PrivateRoutes.DASHBOARD} />} />
       <Route path={PrivateRoutes.DASHBOARD} element={<Dashboard />} >
-        <Route element={<RoleGuard role={Roles.ADMIN} />}>
-          <Route path={PrivateRoutes.STUDENT} element={<StudentDashboard />} />
-          <Route path={PrivateRoutes.FACULTY} element={<FacultyDashboard />} />
-          <Route path={PrivateRoutes.USER} element={<UserDashboard />} />
-          <Route path={PrivateRoutes.BUILDING} element={<BuildingDashboard />} />
-          <Route path={PrivateRoutes.PROGRAM} element={<ProgramDashboard />} />
-          <Route path={PrivateRoutes.COURSE} element={<CourseDashboard />} />
-          <Route path={`${PrivateRoutes.TERM}`} element={<TermDashboard />} />
-          <Route path={`${PrivateRoutes.USER}/add`} element={<AddUserPage />} />
-          <Route path={`${PrivateRoutes.USER}/edit/:id`} element={<EditUserPage />} />
-          <Route path={`${PrivateRoutes.STUDENT}/add`} element={<AddStudentPage />} />
+        <Route path={PrivateRoutes.REGISTRAR} element={<RegistrarDashboard />} />
+        <Route path={PrivateRoutes.ADMIN} >
+          <Route element={<RoleGuard role={Roles.ADMIN} />}>
+            <Route path={PrivateRoutes.STUDENT} element={<StudentDashboard />} />
+            <Route path={PrivateRoutes.FACULTY} element={<FacultyDashboard />} />
+            <Route path={PrivateRoutes.USER} element={<UserDashboard />} />
+            <Route path={PrivateRoutes.BUILDING} element={<BuildingDashboard />} />
+            <Route path={PrivateRoutes.PROGRAM} element={<ProgramDashboard />} />
+            <Route path={PrivateRoutes.COURSE} element={<CourseDashboard />} />
+            <Route path={`${PrivateRoutes.TERM}`} element={<TermDashboard />} />
+            <Route path={`${PrivateRoutes.USER}/add`} element={<AddUserPage />} />
+            <Route path={`${PrivateRoutes.USER}/edit/:id`} element={<EditUserPage />} />
+            <Route path={`${PrivateRoutes.STUDENT}/add`} element={<AddStudentPage />} />
+          </Route>
         </Route>
       </Route>
     </RoutesWithNotFound>
